@@ -1,0 +1,10 @@
+#pragma once
+
+#define SCREEN_WIDTH 1280.0f
+#define SCREEN_HEIGHT 720.0f
+#define PLAYER_RADIUS 10.0f
+#define ANCHOR_RADIUS 10.0f
+#define MAX_ROPE_DISTANCE 300.0f
+#define GRAVITY 0.5f
+#define VELOCITY_DAMPING 0.99f
+#define DYNAMIC_ANCHOR_SPEED 1.0f

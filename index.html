@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Raylib WASM Input Test</title>
+    <style>
+        body { 
+    margin: 0; 
+    background-color: #000; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    height: 100vh; 
+    overflow: hidden;
+}
+canvas.emscripten { 
+    border: none; 
+    background-color: #000; 
+    display: block; 
+    touch-action: none;
+    image-rendering: crisp-edges; /* Ensures pixelated rendering */
+}
+    </style>
+</head>
+<body>
+    <canvas id="canvas" 
+            class="emscripten" 
+            tabindex="1" 
+            oncontextmenu="event.preventDefault()" 
+            width="800" 
+            height="450">
+    </canvas>
+
+    <script>
+        var Module = {
+            canvas: document.getElementById('canvas'),
+            arguments: [],
+            preRun: [],
+            postRun: [],
+            print: (function() {
+                return function(text) {
+                    if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+                    console.log(text);
+                };
+            })(),
+            printErr: function(text) {
+                if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+                console.error(text);
+            },
+            totalDependencies: 0,
+            monitorRunDependencies: function(left) {
+                this.totalDependencies = Math.max(this.totalDependencies, left);
+            },
+            onRuntimeInitialized: function() {
+                console.log('Runtime initialized');
+            }
+        };
+
+        // Touch and keyboard event handlers
+        document.addEventListener('DOMContentLoaded', function() {
+            var canvas = document.getElementById('canvas');
+
+            // Ensure canvas can get keyboard focus
+            canvas.addEventListener('click', function() {
+                canvas.focus();
+            });
+
+            // Prevent default behaviors
+            canvas.addEventListener('touchstart', function(e) {
+                e.preventDefault();
+            }, { passive: false });
+
+            canvas.addEventListener('keydown', function(e) {
+                e.preventDefault();
+            }, { passive: false });
+        });
+    </script>
+
+    <!-- Emscripten Script (replace with your compiled JS) -->
+    <script src="slingbound.js" async></script>
+</body>
+</html>
