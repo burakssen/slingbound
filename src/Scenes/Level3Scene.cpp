@@ -54,6 +54,7 @@ void Level3Scene::Initialize(entt::registry &registry)
     auto finishLine = registry.create();
     registry.emplace<FinishLine>(finishLine);
     registry.emplace<Position>(finishLine, 1400.0f, 600.0f);
+    this->m_sceneEntities.emplace_back(finishLine);
 }
 
 void Level3Scene::Shutdown(entt::registry &registry)
